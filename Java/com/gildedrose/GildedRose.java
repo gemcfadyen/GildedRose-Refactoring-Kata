@@ -9,31 +9,27 @@ class GildedRose {
 
     public void updateQuality() {
         for (Item currentItem : items) {
-            if (notAgedBrie(currentItem)
-                    && notBackstagePasses(currentItem)) {
-                if (qualityIsGreaterThanZero(currentItem)) {
-                    if (notSulfuras(currentItem)) {
-                        defaultQualityDecrease(currentItem);
+                if (!notAgedBrie(currentItem)) {
+                    if (qualityIsLessThanMaximum(currentItem)) {
+                        defaultQualityIncrease(currentItem);
                         defaultSellInDecrement(currentItem);
-
-                        if (getSellInOf(currentItem) < 0 && notSulfuras(currentItem)) {
-                            defaultQualityDecrease(currentItem);
-                        }
+                        brieIncreasesQualityWithAge(currentItem);
                     }
-                }
-            } else { //aged brie and backstage passes
-                if (qualityIsLessThanMaximum(currentItem)) {
-                    defaultQualityIncrease(currentItem);
-                    defaultSellInDecrement(currentItem);
-
-                    if (isBackstagePasses(currentItem)) { //is backstage passes
+                } else if (!notBackstagePasses(currentItem)) {
+                    if (qualityIsLessThanMaximum(currentItem)) {
+                        defaultQualityIncrease(currentItem);
+                        defaultSellInDecrement(currentItem);
                         additionalQualitySetForBackstagePasses(currentItem);
                         backstagePassesLooseAllValueAfterSellIn(currentItem);
                     }
-                    brieIncreasesQualityWithAge(currentItem);
-                }
-            }
+                } else if (notSulfuras(currentItem) && qualityIsGreaterThanZero(currentItem)) {
+                    defaultQualityDecrease(currentItem);
+                    defaultSellInDecrement(currentItem);
 
+                    if (getSellInOf(currentItem) < 0) {
+                        defaultQualityDecrease(currentItem);
+                    }
+                }
         }
     }
 
