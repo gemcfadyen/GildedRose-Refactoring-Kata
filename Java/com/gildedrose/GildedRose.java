@@ -9,28 +9,32 @@ class GildedRose {
 
     public void updateQuality() {
         for (Item currentItem : items) {
-                if (!notAgedBrie(currentItem)) {
-                    if (qualityIsLessThanMaximum(currentItem)) {
-                        defaultQualityIncrease(currentItem);
-                        defaultSellInDecrement(currentItem);
-                        brieIncreasesQualityWithAge(currentItem);
-                    }
-                } else if (!notBackstagePasses(currentItem)) {
-                    if (qualityIsLessThanMaximum(currentItem)) {
-                        defaultQualityIncrease(currentItem);
-                        defaultSellInDecrement(currentItem);
-                        additionalQualitySetForBackstagePasses(currentItem);
-                        backstagePassesLooseAllValueAfterSellIn(currentItem);
-                    }
-                } else if (notSulfuras(currentItem) && qualityIsGreaterThanZero(currentItem)) {
-                    defaultQualityDecrease(currentItem);
+            if (isAgedBrie(currentItem)) {
+                if (qualityIsLessThanMaximum(currentItem)) {
+                    defaultQualityIncrease(currentItem);
                     defaultSellInDecrement(currentItem);
-
-                    if (getSellInOf(currentItem) < 0) {
-                        defaultQualityDecrease(currentItem);
-                    }
+                    brieIncreasesQualityWithAge(currentItem);
                 }
+            } else if (isBackstagePasses(currentItem)) {
+                if (qualityIsLessThanMaximum(currentItem)) {
+                    defaultQualityIncrease(currentItem);
+                    defaultSellInDecrement(currentItem);
+                    additionalQualitySetForBackstagePasses(currentItem);
+                    backstagePassesLooseAllValueAfterSellIn(currentItem);
+                }
+            } else if (notSulfuras(currentItem) && qualityIsGreaterThanZero(currentItem)) {
+                defaultQualityDecrease(currentItem);
+                defaultSellInDecrement(currentItem);
+
+                if (getSellInOf(currentItem) < 0) {
+                    defaultQualityDecrease(currentItem);
+                }
+            }
         }
+    }
+
+    private boolean isAgedBrie(Item currentItem) {
+        return getNameOf(currentItem).equals(AGED_BRIE);
     }
 
     private void backstagePassesLooseAllValueAfterSellIn(Item currentItem) {
@@ -96,7 +100,7 @@ class GildedRose {
     }
 
     private boolean notAgedBrie(Item currentItem) {
-        return !getNameOf(currentItem).equals(AGED_BRIE);
+        return !isAgedBrie(currentItem);
     }
 
     private boolean notSulfuras(Item currentItem) {
