@@ -8,56 +8,81 @@ class GildedRose {
     }
 
     public void updateQuality() {
-        for (int i = 0; i < items.length; i++) {
-            if (!items[i].name.equals("Aged Brie")
-                    && !items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")
+        for (int itemIndex = 0; itemIndex < items.length; itemIndex++) {
+            Item currentItem = items[itemIndex];
+            if (!currentItem.name.equals("Aged Brie")
+                    && !currentItem.name.equals("Backstage passes to a TAFKAL80ETC concert")
                     ) {
-                if (items[i].quality > 0) {
-                    if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
-                        items[i].quality = items[i].quality - 1;
+                if (getQualityOf(currentItem) > 0) {
+                    if (!currentItem.name.equals("Sulfuras, Hand of Ragnaros")) {
+                        setItemQualityTo(currentItem, decrementQualityOfItem(currentItem));
                     }
                 }
             } else {
-                if (items[i].quality < 50) {
-                    items[i].quality = items[i].quality + 1;
+                if (getQualityOf(items[itemIndex]) < 50) {
+                    setItemQualityTo(currentItem, incrementQualityOfItem(currentItem));
 
-                    if (items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (items[i].sellIn < 11) {
-                            if (items[i].quality < 50) {
-                                items[i].quality = items[i].quality + 1;
+                    if (currentItem.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+                        if (getSellInOf(currentItem) < 11) {
+                            if (getQualityOf(currentItem) < 50) {
+                                setItemQualityTo(currentItem, incrementQualityOfItem(currentItem));
                             }
                         }
 
-                        if (items[i].sellIn < 6) {
-                            if (items[i].quality < 50) {
-                                items[i].quality = items[i].quality + 1;
+                        if (getSellInOf(currentItem) < 6) {
+                            if (getQualityOf(currentItem) < 50) {
+                                setItemQualityTo(currentItem, incrementQualityOfItem(currentItem));
                             }
                         }
                     }
                 }
             }
 
-            if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
-                items[i].sellIn = items[i].sellIn - 1;
+            if (!currentItem.name.equals("Sulfuras, Hand of Ragnaros")) {
+                currentItem.sellIn = decrementSellInOfItem(currentItem);
             }
 
-            if (items[i].sellIn < 0) {
-                if (!items[i].name.equals("Aged Brie")) {
-                    if (!items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (items[i].quality > 0) {
-                            if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
-                                items[i].quality = items[i].quality - 1;
+            if (getSellInOf(currentItem) < 0) {
+                if (!currentItem.name.equals("Aged Brie")) {
+                    if (!currentItem.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+                        if (getQualityOf(currentItem) > 0) {
+                            if (!currentItem.name.equals("Sulfuras, Hand of Ragnaros")) {
+                                setItemQualityTo(currentItem, decrementQualityOfItem(currentItem));
                             }
                         }
                     } else {
-                        items[i].quality = items[i].quality - items[i].quality;
+                       setItemQualityTo(currentItem, 0);
                     }
                 } else {
-                    if (items[i].quality < 50) {
-                        items[i].quality = items[i].quality + 1;
+                    if (getQualityOf(currentItem) < 50) {
+                        setItemQualityTo(currentItem, incrementQualityOfItem(currentItem));
                     }
                 }
             }
         }
+    }
+
+    private void setItemQualityTo(Item currentItem, int quality) {
+        currentItem.quality = quality;
+    }
+
+    private int getQualityOf(Item item) {
+        return item.quality;
+    }
+
+    private int decrementSellInOfItem(Item currentItem) {
+        return getSellInOf(currentItem) - 1;
+    }
+
+    private int getSellInOf(Item item) {
+        return item.sellIn;
+    }
+
+    private int incrementQualityOfItem(Item currentItem) {
+        return getQualityOf(currentItem) + 1;
+    }
+
+    private int decrementQualityOfItem(Item currentItem) {
+        return getQualityOf(currentItem) - 1;
     }
 }
