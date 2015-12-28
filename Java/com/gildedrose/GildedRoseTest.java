@@ -186,11 +186,11 @@ public class GildedRoseTest {
     }
 
     private int getItemQuality() {
-        return app.items[0].quality;
+        return app.getItems()[0].quality;
     }
 
     private int getItemSellIn() {
-        return app.items[0].sellIn;
+        return app.getItems()[0].sellIn;
     }
 }
 

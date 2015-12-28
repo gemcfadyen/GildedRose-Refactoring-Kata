@@ -1,28 +1,26 @@
 package com.gildedrose;
 
 class GildedRose {
-    Item[] items;
-
-    public GildedRose(Item[] items) {
-        this.items = items;
-    }
+    private static final String AGED_BRIE = "Aged Brie";
+    private static final String BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert";
+    private static final String SULFURAS = "Sulfuras, Hand of Ragnaros";
+    private Item[] items;
 
     public void updateQuality() {
-        for (int itemIndex = 0; itemIndex < items.length; itemIndex++) {
-            Item currentItem = items[itemIndex];
-            if (!currentItem.name.equals("Aged Brie")
-                    && !currentItem.name.equals("Backstage passes to a TAFKAL80ETC concert")
+        for (Item currentItem : items) {
+            if (notAgedBrie(currentItem)
+                    && notBackstagePasses(currentItem)
                     ) {
-                if (getQualityOf(currentItem) > 0) {
-                    if (!currentItem.name.equals("Sulfuras, Hand of Ragnaros")) {
+                if (qualityIsGreaterThanZero(currentItem)) {
+                    if (notSulfuras(currentItem)) {
                         setItemQualityTo(currentItem, decrementQualityOfItem(currentItem));
                     }
                 }
             } else {
-                if (getQualityOf(items[itemIndex]) < 50) {
+                if (getQualityOf(currentItem) < 50) {
                     setItemQualityTo(currentItem, incrementQualityOfItem(currentItem));
 
-                    if (currentItem.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+                    if (getNameOf(currentItem).equals(BACKSTAGE_PASSES)) {
                         if (getSellInOf(currentItem) < 11) {
                             if (getQualityOf(currentItem) < 50) {
                                 setItemQualityTo(currentItem, incrementQualityOfItem(currentItem));
@@ -38,20 +36,20 @@ class GildedRose {
                 }
             }
 
-            if (!currentItem.name.equals("Sulfuras, Hand of Ragnaros")) {
-                currentItem.sellIn = decrementSellInOfItem(currentItem);
+            if (notSulfuras(currentItem)) {
+                setSellInOf(currentItem, decrementSellInOfItem(currentItem));
             }
 
             if (getSellInOf(currentItem) < 0) {
-                if (!currentItem.name.equals("Aged Brie")) {
-                    if (!currentItem.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (getQualityOf(currentItem) > 0) {
-                            if (!currentItem.name.equals("Sulfuras, Hand of Ragnaros")) {
+                if (notAgedBrie(currentItem)) {
+                    if (notBackstagePasses(currentItem)) {
+                        if (qualityIsGreaterThanZero(currentItem)) {
+                            if (notSulfuras(currentItem)) {
                                 setItemQualityTo(currentItem, decrementQualityOfItem(currentItem));
                             }
                         }
                     } else {
-                       setItemQualityTo(currentItem, 0);
+                        setItemQualityTo(currentItem, 0);
                     }
                 } else {
                     if (getQualityOf(currentItem) < 50) {
@@ -60,6 +58,38 @@ class GildedRose {
                 }
             }
         }
+    }
+
+    private void setSellInOf(Item currentItem, int sellIn) {
+        currentItem.sellIn = sellIn;
+    }
+
+    private boolean notBackstagePasses(Item currentItem) {
+        return !getNameOf(currentItem).equals(BACKSTAGE_PASSES);
+    }
+
+    private boolean notAgedBrie(Item currentItem) {
+        return !getNameOf(currentItem).equals(AGED_BRIE);
+    }
+
+    private boolean notSulfuras(Item currentItem) {
+        return !getNameOf(currentItem).equals(SULFURAS);
+    }
+
+    private boolean qualityIsGreaterThanZero(Item currentItem) {
+        return getQualityOf(currentItem) > 0;
+    }
+
+    public GildedRose(Item[] items) {
+        this.items = items;
+    }
+
+    private String getNameOf(Item currentItem) {
+        return currentItem.name;
+    }
+
+    public Item[] getItems() {
+        return items;
     }
 
     private void setItemQualityTo(Item currentItem, int quality) {
