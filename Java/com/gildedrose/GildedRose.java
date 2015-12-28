@@ -13,41 +13,53 @@ class GildedRose {
                     && notBackstagePasses(currentItem)) {
                 if (qualityIsGreaterThanZero(currentItem)) {
                     if (notSulfuras(currentItem)) {
-                        setItemQualityTo(currentItem, decrementQualityOfItem(currentItem));
+                        defaultQualityDecrease(currentItem);
+                        defaultSellInDecrement(currentItem);
+
+                        if (getSellInOf(currentItem) < 0 && notSulfuras(currentItem)) {
+                            defaultQualityDecrease(currentItem);
+                        }
                     }
                 }
             } else { //aged brie and backstage passes
                 if (qualityIsLessThanMaximum(currentItem)) {
-                    defautQualityIncrease(currentItem);
-                    additionalQualitySetForBackstagePasses(currentItem);
+                    defaultQualityIncrease(currentItem);
+                    defaultSellInDecrement(currentItem);
+
+                    if (isBackstagePasses(currentItem)) { //is backstage passes
+                        additionalQualitySetForBackstagePasses(currentItem);
+                        backstagePassesLooseAllValueAfterSellIn(currentItem);
+                    }
+                    brieIncreasesQualityWithAge(currentItem);
                 }
             }
 
-            if (notSulfuras(currentItem)) {
-                setSellInOf(currentItem, decrementSellInOfItem(currentItem));
-            }
+        }
+    }
 
+    private void backstagePassesLooseAllValueAfterSellIn(Item currentItem) {
+        if (getSellInOf(currentItem) < 0) {
+            setItemQualityTo(currentItem, 0);
+        }
+    }
+
+    private void brieIncreasesQualityWithAge(Item currentItem) {
+        if (!notAgedBrie(currentItem)) { //is Brie
             if (getSellInOf(currentItem) < 0) {
-                if (notAgedBrie(currentItem)) {
-                    if (notBackstagePasses(currentItem)) {
-                        if (qualityIsGreaterThanZero(currentItem)) {
-                            if (notSulfuras(currentItem)) {
-                                setItemQualityTo(currentItem, decrementQualityOfItem(currentItem));
-                            }
-                        }
-                    } else {
-                        setItemQualityTo(currentItem, 0);
-                    }
-                } else {
-                    if (qualityIsLessThanMaximum(currentItem)) {
-                        defautQualityIncrease(currentItem);
-                    }
-                }
+                defaultQualityIncrease(currentItem);
             }
         }
     }
 
-    private void defautQualityIncrease(Item currentItem) {
+    private void defaultQualityDecrease(Item currentItem) {
+        setItemQualityTo(currentItem, decrementQualityOfItem(currentItem));
+    }
+
+    private void defaultSellInDecrement(Item currentItem) {
+        setSellInOf(currentItem, decrementSellInOfItem(currentItem));
+    }
+
+    private void defaultQualityIncrease(Item currentItem) {
         setItemQualityTo(currentItem, incrementQualityOfItem(currentItem));
     }
 
@@ -55,13 +67,13 @@ class GildedRose {
         if (isBackstagePasses(currentItem)) {
             if (sellInIsWithinTenDays(currentItem)) {
                 if (qualityIsLessThanMaximum(currentItem)) {
-                    defautQualityIncrease(currentItem);
+                    defaultQualityIncrease(currentItem);
                 }
             }
 
             if (getSellInOf(currentItem) < 6) {
                 if (qualityIsLessThanMaximum(currentItem)) {
-                    defautQualityIncrease(currentItem);
+                    defaultQualityIncrease(currentItem);
                 }
             }
         }
