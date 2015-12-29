@@ -13,11 +13,8 @@ class GildedRose {
                 AgedBrieItem agedBrieItem = new AgedBrieItem();
                 agedBrieItem.process(currentItem);
             } else if (isBackstagePasses(currentItem)) {
-                if (qualityIsLessThanMaximum(currentItem)) {
-                    qualityIncreasesAsSellInDecreases(currentItem);
-                    additionalQualitySetForBackstagePasses(currentItem);
-                    backstagePassesLooseAllValueAfterSellIn(currentItem);
-                }
+                BackstagePassItem backstagePassItem = new BackstagePassItem();
+                backstagePassItem.process(currentItem);
             } else if (notSulfuras(currentItem) && qualityIsGreaterThanZero(currentItem)) {
                 defaultQualityDecrease(currentItem);
                 defaultSellInDecrement(currentItem);
@@ -29,21 +26,9 @@ class GildedRose {
         }
     }
 
-    private void qualityIncreasesAsSellInDecreases(Item currentItem) {
-        defaultQualityIncrease(currentItem);
-        defaultSellInDecrement(currentItem);
-    }
-
     private boolean isAgedBrie(Item currentItem) {
         return getNameOf(currentItem).equals(AGED_BRIE);
     }
-
-    private void backstagePassesLooseAllValueAfterSellIn(Item currentItem) {
-        if (getSellInOf(currentItem) < 0) {
-            setItemQualityTo(currentItem, 0);
-        }
-    }
-
 
     private void defaultQualityDecrease(Item currentItem) {
         setItemQualityTo(currentItem, decrementQualityOfItem(currentItem));
@@ -55,24 +40,6 @@ class GildedRose {
 
     private void defaultQualityIncrease(Item currentItem) {
         setItemQualityTo(currentItem, incrementQualityOfItem(currentItem));
-    }
-
-    private void additionalQualitySetForBackstagePasses(Item currentItem) {
-        if (sellInIsWithinTenDays(currentItem)) {
-            if (qualityIsLessThanMaximum(currentItem)) {
-                defaultQualityIncrease(currentItem);
-            }
-        }
-
-        if (getSellInOf(currentItem) < 6) {
-            if (qualityIsLessThanMaximum(currentItem)) {
-                defaultQualityIncrease(currentItem);
-            }
-        }
-    }
-
-    private boolean qualityIsLessThanMaximum(Item currentItem) {
-        return getQualityOf(currentItem) < MAXIMUM_QUALITY;
     }
 
     private boolean sellInIsWithinTenDays(Item currentItem) {
@@ -148,6 +115,55 @@ class GildedRose {
             if (qualityIsLessThanMaximum(currentItem)) {
                 qualityIncreasesAsSellInDecreases(currentItem);
                 brieIncreasesQualityWithAge(currentItem);
+            }
+        }
+
+        private int getQualityOf(Item item) {
+            return item.quality;
+        }
+    }
+
+    private class BackstagePassItem {
+
+        private void qualityIncreasesAsSellInDecreases(Item currentItem) {
+            defaultQualityIncrease(currentItem);
+            defaultSellInDecrement(currentItem);
+        }
+
+        private void additionalQualitySetForBackstagePasses(Item currentItem) {
+            if (sellInIsWithinTenDays(currentItem)) {
+                if (qualityIsLessThanMaximum(currentItem)) {
+                    defaultQualityIncrease(currentItem);
+                }
+            }
+
+            if (getSellInOf(currentItem) < 6) {
+                if (qualityIsLessThanMaximum(currentItem)) {
+                    defaultQualityIncrease(currentItem);
+                }
+            }
+        }
+
+        private boolean qualityIsLessThanMaximum(Item currentItem) {
+            return getQualityOf(currentItem) < MAXIMUM_QUALITY;
+        }
+
+
+        private void backstagePassesLooseAllValueAfterSellIn(Item currentItem) {
+            if (getSellInOf(currentItem) < 0) {
+                setItemQualityTo(currentItem, 0);
+            }
+        }
+
+        private int getQualityOf(Item item) {
+            return item.quality;
+        }
+
+        private void process(Item currentItem) {
+            if (qualityIsLessThanMaximum(currentItem)) {
+                qualityIncreasesAsSellInDecreases(currentItem);
+                additionalQualitySetForBackstagePasses(currentItem);
+                backstagePassesLooseAllValueAfterSellIn(currentItem);
             }
         }
     }
