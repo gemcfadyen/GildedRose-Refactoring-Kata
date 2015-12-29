@@ -10,10 +10,8 @@ class GildedRose {
     public void updateQuality() {
         for (Item currentItem : items) {
             if (isAgedBrie(currentItem)) {
-                if (qualityIsLessThanMaximum(currentItem)) {
-                    qualityIncreasesAsSellInDecreases(currentItem);
-                    brieIncreasesQualityWithAge(currentItem);
-                }
+                AgedBrieItem agedBrieItem = new AgedBrieItem();
+                agedBrieItem.process(currentItem);
             } else if (isBackstagePasses(currentItem)) {
                 if (qualityIsLessThanMaximum(currentItem)) {
                     qualityIncreasesAsSellInDecreases(currentItem);
@@ -46,11 +44,6 @@ class GildedRose {
         }
     }
 
-    private void brieIncreasesQualityWithAge(Item currentItem) {
-        if (getSellInOf(currentItem) < 0) {
-            defaultQualityIncrease(currentItem);
-        }
-    }
 
     private void defaultQualityDecrease(Item currentItem) {
         setItemQualityTo(currentItem, decrementQualityOfItem(currentItem));
@@ -132,5 +125,30 @@ class GildedRose {
 
     private int decrementQualityOfItem(Item currentItem) {
         return getQualityOf(currentItem) - 1;
+    }
+
+    private class AgedBrieItem {
+
+        private boolean qualityIsLessThanMaximum(Item currentItem) {
+            return getQualityOf(currentItem) < MAXIMUM_QUALITY;
+        }
+
+        private void qualityIncreasesAsSellInDecreases(Item currentItem) {
+            defaultQualityIncrease(currentItem);
+            defaultSellInDecrement(currentItem);
+        }
+
+        private void brieIncreasesQualityWithAge(Item currentItem) {
+            if (getSellInOf(currentItem) < 0) {
+                defaultQualityIncrease(currentItem);
+            }
+        }
+
+        private void process(Item currentItem) {
+            if (qualityIsLessThanMaximum(currentItem)) {
+                qualityIncreasesAsSellInDecreases(currentItem);
+                brieIncreasesQualityWithAge(currentItem);
+            }
+        }
     }
 }
