@@ -11,14 +11,12 @@ class GildedRose {
         for (Item currentItem : items) {
             if (isAgedBrie(currentItem)) {
                 if (qualityIsLessThanMaximum(currentItem)) {
-                    defaultQualityIncrease(currentItem);
-                    defaultSellInDecrement(currentItem);
+                    qualityIncreasesAsSellInDecreases(currentItem);
                     brieIncreasesQualityWithAge(currentItem);
                 }
             } else if (isBackstagePasses(currentItem)) {
                 if (qualityIsLessThanMaximum(currentItem)) {
-                    defaultQualityIncrease(currentItem);
-                    defaultSellInDecrement(currentItem);
+                    qualityIncreasesAsSellInDecreases(currentItem);
                     additionalQualitySetForBackstagePasses(currentItem);
                     backstagePassesLooseAllValueAfterSellIn(currentItem);
                 }
@@ -33,6 +31,11 @@ class GildedRose {
         }
     }
 
+    private void qualityIncreasesAsSellInDecreases(Item currentItem) {
+        defaultQualityIncrease(currentItem);
+        defaultSellInDecrement(currentItem);
+    }
+
     private boolean isAgedBrie(Item currentItem) {
         return getNameOf(currentItem).equals(AGED_BRIE);
     }
@@ -44,10 +47,8 @@ class GildedRose {
     }
 
     private void brieIncreasesQualityWithAge(Item currentItem) {
-        if (!notAgedBrie(currentItem)) { //is Brie
-            if (getSellInOf(currentItem) < 0) {
-                defaultQualityIncrease(currentItem);
-            }
+        if (getSellInOf(currentItem) < 0) {
+            defaultQualityIncrease(currentItem);
         }
     }
 
@@ -64,17 +65,15 @@ class GildedRose {
     }
 
     private void additionalQualitySetForBackstagePasses(Item currentItem) {
-        if (isBackstagePasses(currentItem)) {
-            if (sellInIsWithinTenDays(currentItem)) {
-                if (qualityIsLessThanMaximum(currentItem)) {
-                    defaultQualityIncrease(currentItem);
-                }
+        if (sellInIsWithinTenDays(currentItem)) {
+            if (qualityIsLessThanMaximum(currentItem)) {
+                defaultQualityIncrease(currentItem);
             }
+        }
 
-            if (getSellInOf(currentItem) < 6) {
-                if (qualityIsLessThanMaximum(currentItem)) {
-                    defaultQualityIncrease(currentItem);
-                }
+        if (getSellInOf(currentItem) < 6) {
+            if (qualityIsLessThanMaximum(currentItem)) {
+                defaultQualityIncrease(currentItem);
             }
         }
     }
@@ -93,14 +92,6 @@ class GildedRose {
 
     private void setSellInOf(Item currentItem, int sellIn) {
         currentItem.sellIn = sellIn;
-    }
-
-    private boolean notBackstagePasses(Item currentItem) {
-        return !isBackstagePasses(currentItem);
-    }
-
-    private boolean notAgedBrie(Item currentItem) {
-        return !isAgedBrie(currentItem);
     }
 
     private boolean notSulfuras(Item currentItem) {
