@@ -23,12 +23,12 @@ public abstract class CommonAgeing implements AgeingRules {
         return item.sellIn;
     }
 
-    protected int addOneToQualityOf(Item currentItem) {
-        return getQualityOf(currentItem) + 1;
+    protected void increaseQualityByOne(Item currentItem) {
+        setItemQualityTo(currentItem, getQualityOf(currentItem) + 1);
     }
 
-    protected int minusOneFromSellInOf(Item currentItem) {
-        return getSellInOf(currentItem) - 1;
+    protected void decreaseSellInByOne(Item currentItem) {
+        setSellInOf(currentItem, getSellInOf(currentItem) - 1);
     }
 
     protected boolean sellInHasPassedFor(Item currentItem) {

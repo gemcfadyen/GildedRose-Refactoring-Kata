@@ -10,15 +10,15 @@ class AgedBrieItem extends CommonAgeing {
 
     public void update(Item currentItem) {
         if (qualityIsLessThanMaximum(currentItem)) {
-            setItemQualityTo(currentItem, addOneToQualityOf(currentItem));
-            setSellInOf(currentItem, minusOneFromSellInOf(currentItem));
+            increaseQualityByOne(currentItem);
+            decreaseSellInByOne(currentItem);
             applyQualityBonusWhenSellInDatePassed(currentItem);
         }
     }
 
     private void applyQualityBonusWhenSellInDatePassed(Item currentItem) {
         if (sellInHasPassedFor(currentItem)) {
-            setItemQualityTo(currentItem, addOneToQualityOf(currentItem));
+            increaseQualityByOne(currentItem);
         }
     }
 }

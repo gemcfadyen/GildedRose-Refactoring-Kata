@@ -9,10 +9,14 @@ class StandardItem extends CommonAgeing {
 
     public void update(Item currentItem) {
         if (qualityIsGreaterThanZero(currentItem)) {
-            setItemQualityTo(currentItem, minusOneToQualityOf(currentItem));
-            setSellInOf(currentItem, minusOneFromSellInOf(currentItem));
+            decreaseQualityByOne(currentItem);
+            decreaseSellInByOne(currentItem);
             applyExtraQualityDegradeOnceSellInHasPast(currentItem);
         }
+    }
+
+    private void decreaseQualityByOne(Item currentItem) {
+        setItemQualityTo(currentItem, minusOneToQualityOf(currentItem));
     }
 
     private boolean notSulfuras(Item currentItem) {
@@ -25,7 +29,7 @@ class StandardItem extends CommonAgeing {
 
     private void applyExtraQualityDegradeOnceSellInHasPast(Item currentItem) {
         if (sellInHasPassedFor(currentItem)) {
-            setItemQualityTo(currentItem, minusOneToQualityOf(currentItem));
+            decreaseQualityByOne(currentItem);
         }
     }
 

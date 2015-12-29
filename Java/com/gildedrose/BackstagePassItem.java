@@ -9,10 +9,10 @@ class BackstagePassItem extends CommonAgeing {
 
     public void update(Item currentItem) {
         if (qualityIsLessThanMaximum(currentItem)) {
-            setItemQualityTo(currentItem, addOneToQualityOf(currentItem));
+            increaseQualityByOne(currentItem);
+            decreaseSellInByOne(currentItem);
             addQualityBonusWhenSellInIsWithinGivenNumberOfDays(currentItem, 10);
             addQualityBonusWhenSellInIsWithinGivenNumberOfDays(currentItem, 5);
-            setSellInOf(currentItem, minusOneFromSellInOf(currentItem));
         }
         zeroQualityWhenSellInHasPast(currentItem);
     }
@@ -26,7 +26,7 @@ class BackstagePassItem extends CommonAgeing {
     private void addQualityBonusWhenSellInIsWithinGivenNumberOfDays(Item currentItem, int numberOfDays) {
         if (getSellInOf(currentItem) <= numberOfDays) {
             if (qualityIsLessThanMaximum(currentItem)) {
-                setItemQualityTo(currentItem, addOneToQualityOf(currentItem));
+                increaseQualityByOne(currentItem);
             }
         }
     }
