@@ -5,29 +5,29 @@ import java.util.List;
 
 class GildedRose {
     Item[] items;
+    private List<AgeingRules> itemAgeingRules = createOrderedAgeingRules();
 
     public GildedRose(Item[] items) {
         this.items = items;
     }
 
     public void updateQuality() {
-        AgeingRules ageingBrieRules = new AgedBrieItem();
-        AgeingRules backstagePassRules = new BackstagePassItem();
-        AgeingRules standardItemRules = new StandardItem();
-        List<AgeingRules> itemAgeingRules = new ArrayList();
-        itemAgeingRules.add(ageingBrieRules);
-        itemAgeingRules.add(backstagePassRules);
-        itemAgeingRules.add(standardItemRules);
-
         for (Item currentItem : items) {
-            if (ageingBrieRules.eligableFor(currentItem)) {
-                ageingBrieRules.process(currentItem);
-            } else if (backstagePassRules.eligableFor(currentItem)) {
-                backstagePassRules.process(currentItem);
-            } else if (standardItemRules.eligableFor(currentItem)) {
-                standardItemRules.process(currentItem);
+            for (AgeingRules agingRule : itemAgeingRules) {
+                if (agingRule.isEligibleFor(currentItem)) {
+                    agingRule.update(currentItem);
+                    break;
+                }
             }
         }
+    }
+
+    private List<AgeingRules> createOrderedAgeingRules() {
+        List<AgeingRules> itemAgeingRules = new ArrayList<>();
+        itemAgeingRules.add(new AgedBrieItem());
+        itemAgeingRules.add(new BackstagePassItem());
+        itemAgeingRules.add(new StandardItem());
+        return itemAgeingRules;
     }
 
 }

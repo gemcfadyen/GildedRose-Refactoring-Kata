@@ -129,6 +129,15 @@ public class GildedRoseTest {
     }
 
     @Test
+    public void backstagePassesKeepTheirQualityWhenThereIsInitiallyOneDayLeftOfSellIn() {
+        app = createGildedRoseAppWith(item("Backstage passes to a TAFKAL80ETC concert", 1, 20));
+
+        app.updateQuality();
+
+        assertThat(getItemQuality(), is(23));
+    }
+
+    @Test
     public void backstagePassesHaveNoQualityAfterSellIn() {
         app = createGildedRoseAppWith(item("Backstage passes to a TAFKAL80ETC concert", 0, 20));
 

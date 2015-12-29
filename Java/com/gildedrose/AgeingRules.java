@@ -1,7 +1,9 @@
 package com.gildedrose;
 
 public interface AgeingRules {
-    void process(Item currentItem);
+    int MAXIMUM_QUALITY = 50;
 
-    boolean eligableFor(Item currentItem);
+    void update(Item currentItem);
+
+    boolean isEligibleFor(Item currentItem);
 }
