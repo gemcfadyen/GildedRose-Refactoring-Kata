@@ -1,6 +1,7 @@
 package com.gildedrose;
 
 class StandardItem implements AgeingRules {
+    private static final String SULFURAS = "Sulfuras, Hand of Ragnaros";
 
     public void process(Item currentItem) {
         if (qualityIsGreaterThanZero(currentItem)) {
@@ -11,6 +12,18 @@ class StandardItem implements AgeingRules {
                 defaultQualityDecrease(currentItem);
             }
         }
+    }
+
+    public boolean eligableFor(Item currentItem) {
+        return notSulfuras(currentItem);
+    }
+
+    private boolean notSulfuras(Item currentItem) {
+        return !getNameOf(currentItem).equals(SULFURAS);
+    }
+
+    private String getNameOf(Item currentItem) {
+        return currentItem.name;
     }
 
     private boolean qualityIsGreaterThanZero(Item currentItem) {

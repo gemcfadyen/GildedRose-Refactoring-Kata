@@ -2,6 +2,7 @@ package com.gildedrose;
 
 class BackstagePassItem implements AgeingRules {
     private static final int MAXIMUM_QUALITY = 50;
+    private static final String BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert";
 
     public void process(Item currentItem) {
         if (qualityIsLessThanMaximum(currentItem)) {
@@ -9,6 +10,14 @@ class BackstagePassItem implements AgeingRules {
             additionalQualitySetForBackstagePasses(currentItem);
             backstagePassesLooseAllValueAfterSellIn(currentItem);
         }
+    }
+
+    public boolean eligableFor(Item currentItem) {
+        return getNameOf(currentItem).equals(BACKSTAGE_PASSES);
+    }
+
+    private String getNameOf(Item currentItem) {
+        return currentItem.name;
     }
 
     private boolean qualityIsLessThanMaximum(Item currentItem) {

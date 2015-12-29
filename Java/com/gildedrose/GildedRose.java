@@ -1,10 +1,9 @@
 package com.gildedrose;
 
-class GildedRose {
-    private static final String AGED_BRIE = "Aged Brie";
-    private static final String BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert";
-    private static final String SULFURAS = "Sulfuras, Hand of Ragnaros";
+import java.util.ArrayList;
+import java.util.List;
 
+class GildedRose {
     Item[] items;
 
     public GildedRose(Item[] items) {
@@ -12,33 +11,23 @@ class GildedRose {
     }
 
     public void updateQuality() {
+        AgeingRules ageingBrieRules = new AgedBrieItem();
+        AgeingRules backstagePassRules = new BackstagePassItem();
+        AgeingRules standardItemRules = new StandardItem();
+        List<AgeingRules> itemAgeingRules = new ArrayList();
+        itemAgeingRules.add(ageingBrieRules);
+        itemAgeingRules.add(backstagePassRules);
+        itemAgeingRules.add(standardItemRules);
+
         for (Item currentItem : items) {
-            if (isAgedBrie(currentItem)) {
-                AgedBrieItem agedBrieItem = new AgedBrieItem();
-                agedBrieItem.process(currentItem);
-            } else if (isBackstagePasses(currentItem)) {
-                BackstagePassItem backstagePassItem = new BackstagePassItem();
-                backstagePassItem.process(currentItem);
-            } else if (notSulfuras(currentItem)) {
-                StandardItem standardItem = new StandardItem();
-                standardItem.process(currentItem);
+            if (ageingBrieRules.eligableFor(currentItem)) {
+                ageingBrieRules.process(currentItem);
+            } else if (backstagePassRules.eligableFor(currentItem)) {
+                backstagePassRules.process(currentItem);
+            } else if (standardItemRules.eligableFor(currentItem)) {
+                standardItemRules.process(currentItem);
             }
         }
     }
 
-    private boolean isAgedBrie(Item currentItem) {
-        return getNameOf(currentItem).equals(AGED_BRIE);
-    }
-
-    private boolean isBackstagePasses(Item currentItem) {
-        return getNameOf(currentItem).equals(BACKSTAGE_PASSES);
-    }
-
-    private boolean notSulfuras(Item currentItem) {
-        return !getNameOf(currentItem).equals(SULFURAS);
-    }
-
-    private String getNameOf(Item currentItem) {
-        return currentItem.name;
-    }
 }

@@ -2,12 +2,22 @@ package com.gildedrose;
 
 class AgedBrieItem implements AgeingRules {
     public static final int MAXIMUM_QUALITY = 50;
+    private static final String AGED_BRIE = "Aged Brie";
+
 
     public void process(Item currentItem) {
         if (qualityIsLessThanMaximum(currentItem)) {
             qualityIncreasesAsSellInDecreases(currentItem);
             brieIncreasesQualityWithAge(currentItem);
         }
+    }
+
+    public boolean eligableFor(Item currentItem) {
+        return getNameOf(currentItem).equals(AGED_BRIE);
+    }
+
+    private String getNameOf(Item currentItem) {
+        return currentItem.name;
     }
 
     private boolean qualityIsLessThanMaximum(Item currentItem) {
