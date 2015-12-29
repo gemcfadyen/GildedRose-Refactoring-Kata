@@ -1,6 +1,6 @@
 package com.gildedrose;
 
-class StandardItem {
+class StandardItem implements AgeingRules {
 
     public void process(Item currentItem) {
         if (qualityIsGreaterThanZero(currentItem)) {

@@ -1,6 +1,6 @@
 package com.gildedrose;
 
-class BackstagePassItem {
+class BackstagePassItem implements AgeingRules {
     private static final int MAXIMUM_QUALITY = 50;
 
     public void process(Item currentItem) {

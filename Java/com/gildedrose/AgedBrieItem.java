@@ -1,6 +1,6 @@
 package com.gildedrose;
 
-class AgedBrieItem {
+class AgedBrieItem implements AgeingRules {
     public static final int MAXIMUM_QUALITY = 50;
 
     public void process(Item currentItem) {
