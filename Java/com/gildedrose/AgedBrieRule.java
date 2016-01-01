@@ -1,6 +1,6 @@
 package com.gildedrose;
 
-class AgedBrieItem extends CommonAgeing {
+class AgedBrieRule extends CommonAgeing {
 
 
     public boolean isEligibleFor(Item currentItem) {

@@ -1,6 +1,6 @@
 package com.gildedrose;
 
-class BackstagePassItem extends CommonAgeing {
+class BackstagePassRule extends CommonAgeing {
 
     public boolean isEligibleFor(Item currentItem) {
         return "Backstage passes to a TAFKAL80ETC concert".equals(getNameOf(currentItem));

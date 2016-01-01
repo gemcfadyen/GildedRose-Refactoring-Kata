@@ -9,7 +9,7 @@ public class Rules {
 
     public Rules(AgeingRule... ageingRules) {
         Collections.addAll(rules, ageingRules);
-        rules.add(new StandardItem());
+        rules.add(new StandardRule());
     }
 
     public List<AgeingRule> getAll() {

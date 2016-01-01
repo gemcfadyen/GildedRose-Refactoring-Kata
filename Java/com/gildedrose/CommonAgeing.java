@@ -46,4 +46,8 @@ public abstract class CommonAgeing implements AgeingRule {
     protected boolean qualityIsLessThanMaximum(Item currentItem) {
         return getQualityOf(currentItem) < MAXIMUM_QUALITY;
     }
+
+    protected boolean qualityIsGreaterThanZero(Item currentItem) {
+        return getQualityOf(currentItem) > 0;
+    }
 }

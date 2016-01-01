@@ -2,7 +2,7 @@ package com.gildedrose;
 
 class GildedRose {
     Item[] items;
-    private Rules ageingRules = new Rules(new ConjuredItem(), new AgedBrieItem(), new BackstagePassItem());
+    private Rules ageingRules = new Rules(new ConjuredRule(), new AgedBrieRule(), new BackstagePassRule());
 
     public GildedRose(Item[] items) {
         this.items = items;

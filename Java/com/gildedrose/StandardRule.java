@@ -1,6 +1,6 @@
 package com.gildedrose;
 
-class StandardItem extends CommonAgeing {
+class StandardRule extends CommonAgeing {
     private static final String SULFURAS = "Sulfuras, Hand of Ragnaros";
 
     public boolean isEligibleFor(Item currentItem) {
@@ -17,10 +17,6 @@ class StandardItem extends CommonAgeing {
 
     private boolean notSulfuras(Item currentItem) {
         return !getNameOf(currentItem).equals(SULFURAS);
-    }
-
-    private boolean qualityIsGreaterThanZero(Item currentItem) {
-        return getQualityOf(currentItem) > 0;
     }
 
     private void applyExtraQualityDegradeOnceSellInHasPast(Item currentItem) {
