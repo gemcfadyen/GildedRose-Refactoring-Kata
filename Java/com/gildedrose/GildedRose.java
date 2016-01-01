@@ -5,7 +5,7 @@ import java.util.List;
 
 class GildedRose {
     Item[] items;
-    private List<AgeingRules> itemAgeingRules = createOrderedAgeingRules();
+    private List<AgeingRule> itemAgeingRules = createOrderedAgeingRules();
 
     public GildedRose(Item[] items) {
         this.items = items;
@@ -13,7 +13,7 @@ class GildedRose {
 
     public void updateQuality() {
         for (Item currentItem : items) {
-            for (AgeingRules agingRule : itemAgeingRules) {
+            for (AgeingRule agingRule : itemAgeingRules) {
                 if (agingRule.isEligibleFor(currentItem)) {
                     agingRule.update(currentItem);
                     break;
@@ -22,8 +22,8 @@ class GildedRose {
         }
     }
 
-    private List<AgeingRules> createOrderedAgeingRules() {
-        List<AgeingRules> itemAgeingRules = new ArrayList<>();
+    private List<AgeingRule> createOrderedAgeingRules() {
+        List<AgeingRule> itemAgeingRules = new ArrayList<>();
         itemAgeingRules.add(new AgedBrieItem());
         itemAgeingRules.add(new BackstagePassItem());
         itemAgeingRules.add(new StandardItem());

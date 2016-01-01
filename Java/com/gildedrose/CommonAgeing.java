@@ -1,6 +1,6 @@
 package com.gildedrose;
 
-public abstract class CommonAgeing implements AgeingRules {
+public abstract class CommonAgeing implements AgeingRule {
     protected static final int MAXIMUM_QUALITY = 50;
 
     protected String getNameOf(Item currentItem) {
