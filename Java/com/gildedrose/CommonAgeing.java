@@ -27,6 +27,14 @@ public abstract class CommonAgeing implements AgeingRule {
         setItemQualityTo(currentItem, getQualityOf(currentItem) + 1);
     }
 
+    protected void decreaseQualityByOne(Item currentItem) {
+        setItemQualityTo(currentItem, minusOneToQualityOf(currentItem));
+    }
+
+    private int minusOneToQualityOf(Item currentItem) {
+        return getQualityOf(currentItem) - 1;
+    }
+
     protected void decreaseSellInByOne(Item currentItem) {
         setSellInOf(currentItem, getSellInOf(currentItem) - 1);
     }

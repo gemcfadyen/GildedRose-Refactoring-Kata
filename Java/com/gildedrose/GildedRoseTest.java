@@ -182,6 +182,17 @@ public class GildedRoseTest {
         assertThat(getItemQuality(), is(41));
     }
 
+    @Test
+    public void conjuredItemDecreaseQuaRlityByTwo() {
+        Item item = new Item("Conjured Mana Cake", 3, 6);
+        app = createGildedRoseAppWith(item);
+
+        app.updateQuality();
+
+        assertThat(item.sellIn, is(2));
+        assertThat(item.quality, is(4));
+    }
+
     private Item item(String name, int sellIn, int quality) {
         return new Item(name, sellIn, quality);
     }

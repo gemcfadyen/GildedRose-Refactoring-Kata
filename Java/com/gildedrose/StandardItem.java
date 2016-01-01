@@ -15,10 +15,6 @@ class StandardItem extends CommonAgeing {
         }
     }
 
-    private void decreaseQualityByOne(Item currentItem) {
-        setItemQualityTo(currentItem, minusOneToQualityOf(currentItem));
-    }
-
     private boolean notSulfuras(Item currentItem) {
         return !getNameOf(currentItem).equals(SULFURAS);
     }
@@ -32,9 +28,4 @@ class StandardItem extends CommonAgeing {
             decreaseQualityByOne(currentItem);
         }
     }
-
-    private int minusOneToQualityOf(Item currentItem) {
-        return getQualityOf(currentItem) - 1;
-    }
-
 }

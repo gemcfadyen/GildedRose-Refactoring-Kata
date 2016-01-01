@@ -3,7 +3,7 @@ package com.gildedrose;
 class BackstagePassItem extends CommonAgeing {
 
     public boolean isEligibleFor(Item currentItem) {
-        return getNameOf(currentItem).equals("Backstage passes to a TAFKAL80ETC concert");
+        return "Backstage passes to a TAFKAL80ETC concert".equals(getNameOf(currentItem));
     }
 
     public void update(Item currentItem) {
