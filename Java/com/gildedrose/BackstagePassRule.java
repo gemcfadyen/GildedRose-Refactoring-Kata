@@ -10,23 +10,31 @@ class BackstagePassRule extends CommonAgeing {
         if (qualityIsLessThanMaximum(currentItem)) {
             increaseQualityByOne(currentItem);
             decreaseSellInByOne(currentItem);
-            addQualityBonusWhenSellInIsWithinGivenNumberOfDays(currentItem, 10);
-            addQualityBonusWhenSellInIsWithinGivenNumberOfDays(currentItem, 5);
+            addQualityBonusWhenSellInWithinTenDays(currentItem);
+            addQualityBonusWhenSellInWithinFiveDays(currentItem);
         }
         zeroQualityWhenSellInHasPast(currentItem);
+    }
+
+    private void addQualityBonusWhenSellInWithinTenDays(Item currentItem) {
+        addQualityBonusForItemWhenSellInWithinGivenDays(currentItem, 10);
+    }
+
+    private void addQualityBonusForItemWhenSellInWithinGivenDays(Item currentItem, int numberOfDays) {
+        if (getSellInOf(currentItem) <= numberOfDays) {
+            if (qualityIsLessThanMaximum(currentItem)) {
+                increaseQualityByOne(currentItem);
+            }
+        }
+    }
+
+    private void addQualityBonusWhenSellInWithinFiveDays(Item currentItem) {
+        addQualityBonusForItemWhenSellInWithinGivenDays(currentItem, 5);
     }
 
     private void zeroQualityWhenSellInHasPast(Item currentItem) {
         if (sellInHasPassedFor(currentItem)) {
             setItemQualityTo(currentItem, 0);
-        }
-    }
-
-    private void addQualityBonusWhenSellInIsWithinGivenNumberOfDays(Item currentItem, int numberOfDays) {
-        if (getSellInOf(currentItem) <= numberOfDays) {
-            if (qualityIsLessThanMaximum(currentItem)) {
-                increaseQualityByOne(currentItem);
-            }
         }
     }
 }

@@ -2,7 +2,6 @@ package com.gildedrose;
 
 class AgedBrieRule extends CommonAgeing {
 
-
     public boolean isEligibleFor(Item currentItem) {
         return "Aged Brie".equals(getNameOf(currentItem));
     }

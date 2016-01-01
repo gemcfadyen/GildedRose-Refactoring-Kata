@@ -15,12 +15,12 @@ public abstract class CommonAgeing implements AgeingRule {
         currentItem.quality = quality;
     }
 
-    protected void setSellInOf(Item currentItem, int sellIn) {
-        currentItem.sellIn = sellIn;
-    }
-
     protected int getSellInOf(Item item) {
         return item.sellIn;
+    }
+
+    protected void setSellInOf(Item currentItem, int sellIn) {
+        currentItem.sellIn = sellIn;
     }
 
     protected void increaseQualityByOne(Item currentItem) {

@@ -1,6 +1,6 @@
 package com.gildedrose;
 
 public interface AgeingRule {
-    void update(Item currentItem);
     boolean isEligibleFor(Item currentItem);
+    void update(Item currentItem);
 }
