@@ -1,11 +1,10 @@
 package com.gildedrose;
 
 class AgedBrieItem extends CommonAgeing {
-    private static final String AGED_BRIE = "Aged Brie";
 
 
     public boolean isEligibleFor(Item currentItem) {
-        return getNameOf(currentItem).equals(AGED_BRIE);
+        return getNameOf(currentItem).equals("Aged Brie");
     }
 
     public void update(Item currentItem) {
