@@ -15,16 +15,24 @@ public abstract class CommonAgeing implements AgeingRule {
         currentItem.quality = quality;
     }
 
-    protected void setSellInOf(Item currentItem, int sellIn) {
-        currentItem.sellIn = sellIn;
-    }
-
     protected int getSellInOf(Item item) {
         return item.sellIn;
     }
 
+    protected void setSellInOf(Item currentItem, int sellIn) {
+        currentItem.sellIn = sellIn;
+    }
+
     protected void increaseQualityByOne(Item currentItem) {
         setItemQualityTo(currentItem, getQualityOf(currentItem) + 1);
+    }
+
+    protected void decreaseQualityByOne(Item currentItem) {
+        setItemQualityTo(currentItem, minusOneToQualityOf(currentItem));
+    }
+
+    private int minusOneToQualityOf(Item currentItem) {
+        return getQualityOf(currentItem) - 1;
     }
 
     protected void decreaseSellInByOne(Item currentItem) {
@@ -37,5 +45,9 @@ public abstract class CommonAgeing implements AgeingRule {
 
     protected boolean qualityIsLessThanMaximum(Item currentItem) {
         return getQualityOf(currentItem) < MAXIMUM_QUALITY;
+    }
+
+    protected boolean qualityIsGreaterThanZero(Item currentItem) {
+        return getQualityOf(currentItem) > 0;
     }
 }
